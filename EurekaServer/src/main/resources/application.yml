@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: Eureka_Server
+
+server:
+  port: 8761
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
