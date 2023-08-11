@@ -15,6 +15,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -34,7 +35,7 @@ public class PetOwnerService{
 
 
 
-    public void registerPetOwner(PetOwnerRequestDto petOwnerRequestDto) {
+    public void registerPetOwner(PetOwnerRequestDto petOwnerRequestDto) throws InterruptedException {
         PetOwnerEntity petOwner = PetOwnerEntity.builder()
                 .firstName(petOwnerRequestDto.firstName())
                 .lastName(petOwnerRequestDto.lastName())
@@ -53,15 +54,32 @@ public class PetOwnerService{
         service[0]="APP";
         service[1]="EMAIL";
         service[2]="SMS";
+        String large = "We're excited to announce our upcoming Pet Campaign, dedicated to our beloved furry friends! \n" +
+                "Join us for:\n" +
+                "Exclusive discounts on pet products and services.\n" +
+                "Fun activities and games for pets and their owners.\n" +
+                "A pet photo contest with fantastic prizes.\n" +
+                "An opportunity to give a loving home to a pet in need.\n" +
+                "Save the date for [Campaign Date] and celebrate the joy of pets with us. Don't miss out!\n" +
+                "Stay tuned for more updates on our website and social media.";
+        large="welcome to runloyal";
 
-        for (int i=0;i<50;i++) {
+        for (int i=0;i<100;i++) {
 
             Owner owner = Owner.builder()
-                    .message("Welcome to Runloyal")
+                    .message(large)
                     .email(petOwnerSaved.getEmail())
-                    .service(service[0])
+                    .service("message"+"_"+i)
+                    .uuid(String.valueOf(UUID.randomUUID()))
                     .build();
-            kafkaTemplate.send("petowner",owner );
+
+            kafkaTemplate.send("petowner", String.valueOf(i%2 ==0 ? 1 : 2),owner );
+
+//            try {
+////                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
         }
 
 

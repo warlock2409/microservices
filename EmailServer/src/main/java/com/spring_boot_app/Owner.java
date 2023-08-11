@@ -13,5 +13,7 @@ public class Owner {
     private String email;
     private String message;
     private Integer port;
+    private  String uuid;
+
     private String service;
 }

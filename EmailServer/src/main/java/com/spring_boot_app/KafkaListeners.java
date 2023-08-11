@@ -22,8 +22,14 @@ public class KafkaListeners {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             Owner owner = objectMapper.readValue(message, Owner.class);
+            EmailEntity uuid= emailRepository.findByUuid(owner.getUuid());
+
+            if(uuid != null){
+                System.out.println("Message already processed");
+                return;
+            }
+
             String serverPort = environment.getProperty("server.port");
-            System.out.println(serverPort);
             assert serverPort != null;
             System.out.println(owner);
                 EmailEntity serviceOwner = EmailEntity.builder()
@@ -31,11 +37,12 @@ public class KafkaListeners {
                         .email(owner.getEmail())
                         .port(Integer.valueOf(serverPort))
                         .message(owner.getMessage())
+                        .uuid(owner.getUuid())
                         .build();
             // Now you have the deserialized Owner object, you can process it.
 
             emailRepository.save(serviceOwner);
-            Thread.sleep(5000);
+            Thread.sleep(1);
 
         } catch (IOException e) {
             // Handle deserialization exception

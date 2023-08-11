@@ -13,7 +13,7 @@ public class Owner {
     private String email;
 
     private String message;
-
+    private  String uuid;
     private Integer port;
     private String service;
 }

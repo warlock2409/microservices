@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public record PetOwnerController(PetOwnerService petOwnerService) {
 
     @PostMapping("/register")
-    public void registerPetOwner(@RequestBody PetOwnerRequestDto petOwnerRequestDto){
+    public void registerPetOwner(@RequestBody PetOwnerRequestDto petOwnerRequestDto) throws InterruptedException {
         log.info("New Pet Owner {}", petOwnerRequestDto);
         petOwnerService.registerPetOwner(petOwnerRequestDto);
     }

@@ -26,6 +26,7 @@ public class KafkaProducerConfig {
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,bootStrapService);
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+//        properties.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG,500000);
         return properties;
     }
 //    allow us to create kafka Producer

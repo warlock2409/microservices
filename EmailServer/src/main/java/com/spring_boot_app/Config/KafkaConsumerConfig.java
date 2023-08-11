@@ -34,7 +34,7 @@ public class KafkaConsumerConfig {
         JsonDeserializer<Owner>  jsonDeserializer= new JsonDeserializer<>();
         jsonDeserializer.addTrustedPackages("com.spring_boot_app");
 
-        return new DefaultKafkaConsumerFactory<>(consumerConfig(),new StringDeserializer(),  jsonDeserializer);
+        return new DefaultKafkaConsumerFactory<>(consumerConfig(),new StringDeserializer(),jsonDeserializer);
     }
 
     @Bean
@@ -42,7 +42,6 @@ public class KafkaConsumerConfig {
 
         ConcurrentKafkaListenerContainerFactory<String,Owner> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
-
         return factory;
     }
 }
